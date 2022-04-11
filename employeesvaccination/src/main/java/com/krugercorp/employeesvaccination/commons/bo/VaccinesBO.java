@@ -11,7 +11,7 @@ public class VaccinesBO {
 	
 	 public Vaccine vaccinePostReqToVaccine(Employee employee, Vaccine vaccine, VaccinePostReq vaccinePostReq) {
 		 vaccine.setEmployee(employee);
-		 vaccine.setTypeVaccine(vaccinePostReq.getTypeVaccine());
+		 vaccine.setTypeVaccine(vaccinePostReq.getVaccine().toLowerCase());
 		 vaccine.setVaccinationDate(vaccinePostReq.getVaccination_date());
 		 vaccine.setNumberDoses(vaccinePostReq.getNumber_doses());
 		 return vaccine;

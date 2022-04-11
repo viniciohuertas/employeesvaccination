@@ -1,5 +1,6 @@
 package com.krugercorp.employeesvaccination.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -22,4 +23,6 @@ public interface EmployeesService {
 	void deleteEmployee(Integer id) throws CustomValidationException;
 
 	Employee putEmployee(Integer id, EmployeePutReq employeePutReq) throws CustomValidationException;
+
+	List<Employee> getEmployeesFilter(Boolean vaccinationStatus, String typeVaccine, LocalDate initialDate, LocalDate finalDate);
 }

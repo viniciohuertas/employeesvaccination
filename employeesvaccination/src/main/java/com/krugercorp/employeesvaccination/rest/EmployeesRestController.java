@@ -14,12 +14,15 @@ import com.krugercorp.employeesvaccination.service.EmployeesService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,7 @@ public class EmployeesRestController {
     private InfoResponse infoResponse;
     private Employee employee;
     private List<Employee> employees;
+    private String info;
     
     private CommonBO commonBO;
     private ValidationsBO validationsBO;
@@ -58,7 +62,8 @@ public class EmployeesRestController {
         try {
             this.validationsBO.employeePostValidation(employeePostReq.getIdentification());
             this.employee = this.employeesService.postEmployees(employeePostReq);
-            response.put(Constants.Messages.EMPLOYEE, this.employee);
+            this.info = Constants.Messages.REGISTER_OK;
+            response.put(Constants.Messages.INFO_RESPONSE, this.info);
         } catch (DataAccessException e) {
             infoResponse = this.commonBO.fillInfo(EnumResponse.ERROR_DB);
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);
@@ -87,7 +92,7 @@ public class EmployeesRestController {
         try {
             this.validationsBO.employeePostValidation(employeePutReq.getIdentification());
             this.employee = this.employeesService.putEmployee(id, employeePutReq);
-            response.put(Constants.Messages.EMPLOYEE, this.employee);
+            response.put(Constants.Messages.INFO_RESPONSE, Constants.Messages.UPDATE_OK);
         } catch (DataAccessException e) {
             infoResponse = this.commonBO.fillInfo(EnumResponse.ERROR_DB);
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);
@@ -115,7 +120,11 @@ public class EmployeesRestController {
         }
         try {
             this.employee = this.employeesService.patchEmployee(id, employeePatchReq);
-            response.put(Constants.Messages.EMPLOYEES, this.employee);
+            if (this.employee.getVaccinationStatus())
+            	this.info = Constants.Messages.REGISTER_VACCINES;
+            else
+            	this.info = Constants.Messages.REGISTER_FINAL;
+            response.put(Constants.Messages.INFO_RESPONSE, this.info);
         } catch (DataAccessException e) {
             infoResponse = this.commonBO.fillInfo(EnumResponse.ERROR_DB);
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);
@@ -155,12 +164,16 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     
-    @GetMapping("employees/")
-    public ResponseEntity<?> getEmployees() {
+    @GetMapping("employees")
+    public ResponseEntity<?> getEmployeesFilter(
+    		@RequestParam(value = "vaccinationStatus", required = false) Boolean vaccinationStatus,
+    		@RequestParam(value = "typeVaccine", required = false) String typeVaccine,
+    		@RequestParam(value = "initialDate", required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate initialDate,
+			@RequestParam(value = "finalDate", required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate finalDate) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();
         try {
-            this.employees = this.employeesService.getEmployees();
+            this.employees = this.employeesService.getEmployeesFilter(vaccinationStatus, typeVaccine, initialDate, finalDate);
             response.put(Constants.Messages.EMPLOYEES, this.employees);
         } catch (DataAccessException e) {
             infoResponse = this.commonBO.fillInfo(EnumResponse.ERROR_DB);

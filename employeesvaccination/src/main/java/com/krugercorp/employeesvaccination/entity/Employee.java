@@ -15,13 +15,13 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "employee", schema = Constants.Entitys.SCHEMA)
+@Table(name = "employee", schema = Constants.Entities.SCHEMA)
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "gen_employee_seq", sequenceName = "employee_seq", schema = Constants.Entitys.SCHEMA, allocationSize = 1)
+    @SequenceGenerator(name = "gen_employee_seq", sequenceName = "employee_seq", schema = Constants.Entities.SCHEMA, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_employee_seq")
     @Column(name = "id_employee", unique = true, nullable = false, precision = 131089, scale = 0)
     private int idEmployee;

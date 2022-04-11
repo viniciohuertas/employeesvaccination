@@ -57,9 +57,11 @@ public class Validator implements Serializable {
             cedulaCorrecta = false;
         }
 
-        if (!cedulaCorrecta) {
+        if (!cedulaCorrecta)
             LOG.info("La Cédula ingresada es Incorrecta");
-        }
+        else
+            LOG.info("La Cédula ingresada es Correcta");
+
         return cedulaCorrecta;
     }
 }

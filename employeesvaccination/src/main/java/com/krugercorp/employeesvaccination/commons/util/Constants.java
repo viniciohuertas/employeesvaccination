@@ -34,7 +34,7 @@ public class Constants {
 		public static final String ALGORITMO_AES = "PBEWithMD5AndDES";
 	}
 
-	public static final class Entitys {
+	public static final class Entities {
 		public static final String SCHEMA = "employeevaccine";
 	}
 
@@ -42,7 +42,12 @@ public class Constants {
 		public static final String INFO_RESPONSE = "infoResponse";
 		public static final String EMPLOYEE = "employee";
 		public static final String EMPLOYEES = "employees";
+		public static final String CATALOGUES = "catalogues";
 		public static final String VACCINE = "vaccine";
+		public static final String REGISTER_VACCINES = "El registro de sus datos adicionales ha sido exitoso, ahora debe proceder a registrar sus vacunas en el método: /vaccines";
+		public static final String REGISTER_FINAL = "El registro de sus datos adicionales ha sido exitoso.";
+		public static final String REGISTER_OK = "El registro de datos ha sido exitoso.";
+		public static final String UPDATE_OK = "Actualización de datos ha sido exitoso.";
 	}
 
 }

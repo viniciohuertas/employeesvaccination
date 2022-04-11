@@ -8,8 +8,10 @@ import com.krugercorp.employeesvaccination.commons.request.EmployeePostReq;
 import com.krugercorp.employeesvaccination.commons.request.EmployeePutReq;
 import com.krugercorp.employeesvaccination.entity.Employee;
 import com.krugercorp.employeesvaccination.repository.EmployeeRepository;
+import com.krugercorp.employeesvaccination.repository.EmployeeRepositoryCustom;
 import com.krugercorp.employeesvaccination.service.EmployeesService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -24,14 +26,16 @@ public class EmployeesServiceImpl implements EmployeesService {
 
     private EmployeesBO employeesBO;
     private EmployeeRepository employeeRepository;
+    private EmployeeRepositoryCustom employeeRepositoryCustom;
 
     public EmployeesServiceImpl() {
     }
 
     @Autowired
-    public EmployeesServiceImpl(EmployeesBO employeesBO, EmployeeRepository employeeRepository) {
+    public EmployeesServiceImpl(EmployeesBO employeesBO, EmployeeRepository employeeRepository, EmployeeRepositoryCustom employeeRepositoryCustom) {
         this.employeesBO = employeesBO;
         this.employeeRepository = employeeRepository;
+        this.employeeRepositoryCustom = employeeRepositoryCustom;    
     }
 
     @Override
@@ -84,5 +88,10 @@ public class EmployeesServiceImpl implements EmployeesService {
 		
 		employee = this.employeesBO.putEmployee(employee, employeePutReq);
 		return this.employeeRepository.save(employee);
+	}
+
+	@Override
+	public List<Employee> getEmployeesFilter(Boolean vaccinationStatus, String typeVaccine, LocalDate initialDate, LocalDate finalDate) {
+		return this.employeeRepositoryCustom.findFilter(vaccinationStatus, typeVaccine, initialDate, finalDate);
 	}
 }

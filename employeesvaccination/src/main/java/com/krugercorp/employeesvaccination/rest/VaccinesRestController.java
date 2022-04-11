@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.krugercorp.employeesvaccination.commons.bo.CommonBO;
+import com.krugercorp.employeesvaccination.commons.bo.ValidationsBO;
 import com.krugercorp.employeesvaccination.commons.enumerations.EnumResponse;
 import com.krugercorp.employeesvaccination.commons.exception.CustomValidationException;
 import com.krugercorp.employeesvaccination.commons.request.EmployeePostReq;
@@ -28,6 +29,7 @@ import com.krugercorp.employeesvaccination.commons.request.VaccinePostReq;
 import com.krugercorp.employeesvaccination.commons.response.InfoResponse;
 import com.krugercorp.employeesvaccination.commons.util.Constants;
 import com.krugercorp.employeesvaccination.entity.Vaccine;
+import com.krugercorp.employeesvaccination.repository.EmployeeRepository;
 import com.krugercorp.employeesvaccination.service.VaccinesService;
 
 @CommonsLog(topic = "vaccinesRestController")
@@ -39,9 +41,10 @@ public class VaccinesRestController {
 	private Map<String, Object> response = null;
     private InfoResponse infoResponse;
     private Vaccine vaccine;
+    private String info;
     
     private CommonBO commonBO;
-    private final VaccinesService vaccinessService;
+    private final VaccinesService vaccinessService;    
     
     @Autowired
 	public VaccinesRestController(CommonBO commonBO, VaccinesService vaccinessService) {
@@ -59,9 +62,9 @@ public class VaccinesRestController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            //this.validationsBO.employeePostValidation(employeePostReq.getIdentification());
             this.vaccine = this.vaccinessService.postVaccine(id, vaccinePostReq);
-            response.put(Constants.Messages.VACCINE, this.vaccine);
+            this.info = Constants.Messages.REGISTER_OK;
+            response.put(Constants.Messages.VACCINE, this.info);
         } catch (DataAccessException e) {
             infoResponse = this.commonBO.fillInfo(EnumResponse.ERROR_DB);
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);

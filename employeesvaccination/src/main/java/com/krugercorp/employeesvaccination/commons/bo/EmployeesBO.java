@@ -14,6 +14,10 @@ public class EmployeesBO {
         employee.setFirstname(employeePostReq.getFirstname());
         employee.setLastname(employeePostReq.getLastname());
         employee.setEmail(employeePostReq.getEmail());
+        employee.setBirthdate(null);
+        employee.setAddress("");
+        employee.setCellphone("");
+        employee.setVaccinationStatus(false);
         return employee;
     }
 

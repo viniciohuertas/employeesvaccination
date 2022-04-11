@@ -1,5 +1,6 @@
 package com.krugercorp.employeesvaccination.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.krugercorp.employeesvaccination.commons.util.Constants;
 import lombok.Data;
 
@@ -8,12 +9,12 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "catalogue_detail", schema = Constants.Entitys.SCHEMA)
+@Table(name = "catalogue_detail", schema = Constants.Entities.SCHEMA)
 public class CatalogueDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name = "gen_catalogue_detail_seq", sequenceName = "catalogue_detail_seq", schema = Constants.Entitys.SCHEMA, allocationSize = 1)
+    @SequenceGenerator(name = "gen_catalogue_detail_seq", sequenceName = "catalogue_detail_seq", schema = Constants.Entities.SCHEMA, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_catalogue_detail_seq")
     @Column(name = "id_catalogue_detail", unique = true, nullable = false, precision = 131089, scale = 0)
     private int idCatalogueDetail;
@@ -26,5 +27,6 @@ public class CatalogueDetail implements Serializable {
     @Column(name = "status_detail", columnDefinition = "boolean default true")
     private Boolean statusDetail;
     @ManyToOne
+    @JsonBackReference
     private Catalogue catalogue;
 }
