@@ -7,6 +7,16 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Class: CatalogueDetail.java 
+ * <br>
+ * Date Creation: 10/04/2022 <br>
+ * 
+ * @author Vinicio Huertas
+ * @version 1.0.0
+ * @since jdk 11
+ **/
+
 @Data
 @Entity
 @Table(name = "catalogue_detail", schema = Constants.Entities.SCHEMA)

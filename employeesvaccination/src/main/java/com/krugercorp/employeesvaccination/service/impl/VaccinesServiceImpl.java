@@ -13,10 +13,19 @@ import com.krugercorp.employeesvaccination.entity.CatalogueDetail;
 import com.krugercorp.employeesvaccination.entity.Employee;
 import com.krugercorp.employeesvaccination.entity.Vaccine;
 import com.krugercorp.employeesvaccination.repository.CatalogueDetailRepository;
-import com.krugercorp.employeesvaccination.repository.CatalogueRepository;
 import com.krugercorp.employeesvaccination.repository.EmployeeRepository;
 import com.krugercorp.employeesvaccination.repository.VaccinneRepository;
 import com.krugercorp.employeesvaccination.service.VaccinesService;
+
+/**
+ * Class: VaccinesServiceImpl.java 
+ * <br>
+ * Date Creation: 10/04/2022 <br>
+ * 
+ * @author Vinicio Huertas
+ * @version 1.0.0
+ * @since jdk 11
+ **/
 
 @Service
 public class VaccinesServiceImpl implements VaccinesService {

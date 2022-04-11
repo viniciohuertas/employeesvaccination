@@ -19,6 +19,16 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Class: EmployeesServiceImpl.java 
+ * <br>
+ * Date Creation: 10/04/2022 <br>
+ * 
+ * @author Vinicio Huertas
+ * @version 1.0.0
+ * @since jdk 11
+ **/
+
 @Service
 public class EmployeesServiceImpl implements EmployeesService {
 

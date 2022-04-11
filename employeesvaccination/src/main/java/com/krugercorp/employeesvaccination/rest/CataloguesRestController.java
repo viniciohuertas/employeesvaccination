@@ -25,6 +25,16 @@ import com.krugercorp.employeesvaccination.entity.CatalogueDetail;
 import com.krugercorp.employeesvaccination.entity.Employee;
 import com.krugercorp.employeesvaccination.service.CataloguesService;
 
+/**
+ * Class: CataloguesRestController.java 
+ * <br>
+ * Date Creation: 10/04/2022 <br>
+ * 
+ * @author Vinicio Huertas
+ * @version 1.0.0
+ * @since jdk 11
+ **/
+
 @CommonsLog(topic = "cataloguesRestController")
 @CrossOrigin(origins = "*")
 @RestController

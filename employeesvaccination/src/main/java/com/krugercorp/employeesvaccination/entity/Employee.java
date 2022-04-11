@@ -13,6 +13,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class: Employee.java 
+ * <br>
+ * Date Creation: 10/04/2022 <br>
+ * 
+ * @author Vinicio Huertas
+ * @version 1.0.0
+ * @since jdk 11
+ **/
+
 @Data
 @Entity
 @Table(name = "employee", schema = Constants.Entities.SCHEMA)

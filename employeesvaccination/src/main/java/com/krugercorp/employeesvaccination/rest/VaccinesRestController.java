@@ -32,6 +32,16 @@ import com.krugercorp.employeesvaccination.entity.Vaccine;
 import com.krugercorp.employeesvaccination.repository.EmployeeRepository;
 import com.krugercorp.employeesvaccination.service.VaccinesService;
 
+/**
+ * Class: VaccinesRestController.java 
+ * <br>
+ * Date Creation: 10/04/2022 <br>
+ * 
+ * @author Vinicio Huertas
+ * @version 1.0.0
+ * @since jdk 11
+ **/
+
 @CommonsLog(topic = "vaccinesRestController")
 @CrossOrigin(origins = "*")
 @RestController

@@ -27,6 +27,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class: EmployeesRestController.java 
+ * <br>
+ * Date Creation: 10/04/2022 <br>
+ * 
+ * @author Vinicio Huertas
+ * @version 1.0.0
+ * @since jdk 11
+ **/
+
 @CommonsLog(topic = "employeesRestController")
 @CrossOrigin(origins = "*")
 @RestController

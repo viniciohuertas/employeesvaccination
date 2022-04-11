@@ -9,6 +9,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class: Catalogue.java 
+ * <br>
+ * Date Creation: 10/04/2022 <br>
+ * 
+ * @author Vinicio Huertas
+ * @version 1.0.0
+ * @since jdk 11
+ **/
+
 @Data
 @Entity
 @Table(name = "catalogue", schema = Constants.Entities.SCHEMA)

@@ -10,7 +10,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-//@Data
+/**
+ * Class: Vaccine.java 
+ * <br>
+ * Date Creation: 10/04/2022 <br>
+ * 
+ * @author Vinicio Huertas
+ * @version 1.0.0
+ * @since jdk 11
+ **/
+
 @Entity
 @Table(name = "vaccine", schema = Constants.Entities.SCHEMA)
 public class Vaccine implements Serializable {
