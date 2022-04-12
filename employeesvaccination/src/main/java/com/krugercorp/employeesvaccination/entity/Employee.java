@@ -50,6 +50,7 @@ public class Employee implements Serializable {
     private String cellphone;
     @Column(columnDefinition = "boolean default false")
     private Boolean vaccinationStatus;
+    
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     @ToStringExclude

@@ -112,6 +112,12 @@ public class EmployeesServiceImpl implements EmployeesService {
 		if (employee == null)
 			throw new CustomValidationException(EnumResponse.NO_EXIST);
 		
+		Users user = this.userRepository.findByUsername(employee.getIdentification());
+		Role role = this.roleRepository.findByUsers(user);
+		
+		this.roleRepository.delete(role);
+		this.userRepository.delete(user);
+		
 		this.employeeRepository.deleteById(id);	
 	}
 

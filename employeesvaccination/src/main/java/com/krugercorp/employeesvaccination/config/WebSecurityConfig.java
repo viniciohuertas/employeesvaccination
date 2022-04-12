@@ -60,8 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         				"/webjars/**"
                                 )
                                 .permitAll()
-                                .anyRequest()
-                                .authenticated()
+				/*
+				 * .anyRequest() .authenticated()
+				 */
                 );
 
         // JWT Validation Configuration
