@@ -51,10 +51,10 @@ public class JpaUserDetailsService implements UserDetailsService {
 
 		List<GrantedAuthority> authorities = new ArrayList<>();
 
-		for (Role role : user.getRoles()) {
+		/*for (Role role : user.getRoles()) {
 			//logger.debug("Role: ".concat(role.getAuthority()));
 			authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-		}
+		}*/
 		user.getRoles().forEach(rol -> authorities.add(new SimpleGrantedAuthority(rol.getAuthority())));
 
 		if (authorities.isEmpty()) {
