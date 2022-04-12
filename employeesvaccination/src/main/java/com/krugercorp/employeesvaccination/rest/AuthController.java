@@ -1,11 +1,12 @@
 package com.krugercorp.employeesvaccination.rest;
 
-import com.krugercorp.employeesvaccination.commons.response.LoginResult;
+import com.krugercorp.employeesvaccination.commons.dto.JwtResponse;
 import com.krugercorp.employeesvaccination.config.WebSecurityConfig;
 import com.krugercorp.employeesvaccination.security.JwtHelper;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 @RestController
 public class AuthController {
 
+	private Map<String, Object> response = null;
     private final JwtHelper jwtHelper;
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
@@ -42,9 +44,8 @@ public class AuthController {
     }
 
     @PostMapping(path = "login", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public LoginResult login(
-            @RequestParam String username,
-            @RequestParam String password) {
+    public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
+    	this.response = new HashMap<>();
 
         UserDetails userDetails;
         try {
@@ -63,8 +64,9 @@ public class AuthController {
             claims.put(WebSecurityConfig.AUTHORITIES_CLAIM_NAME, authorities);
             claims.put("userId", String.valueOf(1));
 
-            String jwt = jwtHelper.createJwtForClaims(username, claims);
-            return new LoginResult(jwt);
+            JwtResponse jwt = jwtHelper.createJwtForClaims(username, claims);
+
+            return new ResponseEntity<>(jwt, HttpStatus.OK);
         }
 
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated");

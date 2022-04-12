@@ -40,7 +40,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         configurer
                                 .antMatchers(
                                         "/error",
-                                        "/login"
+                                        "/login",
+                                        "/", "/css/**", "/js/**", "/images/**","/listar**",
+                        				"/v3/api-docs",
+                        				"/configuration/ui",
+                        				"/swagger-resources/**",
+                        				"/configuration/security",
+                        				"/swagger-ui.html",
+                        				"/swagger-ui/**",
+                        				"/javainuse-openapi/**",
+                        				"/v3/api-docs/swagger-config",
+                        				"/webjars/**"
                                 )
                                 .permitAll()
                                 .anyRequest()
@@ -60,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         UserDetails user1 = User
                 .withUsername("user1")
-                .authorities("ADMIN", "STAFF_MEMBER")
+                .authorities("ADMIN")
                 .passwordEncoder(passwordEncoder::encode)
                 .password("1234")
                 .build();
@@ -68,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         UserDetails user2 = User
                 .withUsername("user2")
-                .authorities("STAFF_MEMBER")
+                .authorities("EMPLOYEE")
                 .passwordEncoder(passwordEncoder::encode)
                 .password("1234")
                 .build();
@@ -76,7 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         UserDetails user3 = User
                 .withUsername("user3")
-                .authorities("ASSISTANT_MANAGER", "STAFF_MEMBER")
+                .authorities("EMPLOYEE")
                 .passwordEncoder(passwordEncoder::encode)
                 .password("1234")
                 .build();
@@ -84,7 +94,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         UserDetails user4 = User
                 .withUsername("user4")
-                .authorities("MANAGER", "STAFF_MEMBER")
+                .authorities("EMPLOYEE")
                 .passwordEncoder(passwordEncoder::encode)
                 .password("1234")
                 .build();

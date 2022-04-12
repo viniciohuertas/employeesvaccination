@@ -17,6 +17,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -116,7 +117,7 @@ public class EmployeesRestController {
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PatchMapping("employees/{id}")
@@ -148,7 +149,7 @@ public class EmployeesRestController {
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("employees/{id}")
@@ -171,10 +172,11 @@ public class EmployeesRestController {
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @GetMapping("employees")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getEmployeesFilter(
     		@RequestParam(value = "vaccinationStatus", required = false) Boolean vaccinationStatus,
     		@RequestParam(value = "typeVaccine", required = false) String typeVaccine,
@@ -194,7 +196,7 @@ public class EmployeesRestController {
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @DeleteMapping("employees/{id}")
@@ -217,6 +219,6 @@ public class EmployeesRestController {
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -10,6 +10,8 @@ import java.util.Map;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.krugercorp.employeesvaccination.commons.dto.JwtResponse;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +32,7 @@ public class JwtHelper {
 		this.publicKey = publicKey;
 	}
 	
-	public String createJwtForClaims(String subject, Map<String, String> claims) {
+	public JwtResponse createJwtForClaims(String subject, Map<String, String> claims) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(Instant.now().toEpochMilli());
 		calendar.add(Calendar.DATE, 1);
@@ -41,9 +43,18 @@ public class JwtHelper {
 		claims.forEach(jwtBuilder::withClaim);
 		
 		// Add expiredAt and etc
-		return jwtBuilder
+		String accessToken = jwtBuilder
 				.withNotBefore(new Date())
 				.withExpiresAt(calendar.getTime())
 				.sign(Algorithm.RSA256(publicKey, privateKey));
+		
+		JwtResponse jwt = JwtResponse.builder()
+				.tokenType("bearer")
+				.accessToken(accessToken)
+				.issuedAt(new Date() +  "")
+				.clientId(subject)
+				.expiresIn(3600)
+				.build();
+		return jwt;
 	}
 }
