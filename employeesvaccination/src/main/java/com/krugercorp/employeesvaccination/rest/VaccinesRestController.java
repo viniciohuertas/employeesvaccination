@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,6 +64,7 @@ public class VaccinesRestController {
 	}
 
 	@PostMapping("employees/{id}/vaccines")
+	@PreAuthorize("hasAuthority('EMPLOYEE')")
     public ResponseEntity<?> postEmployees(@PathVariable Integer id, @Valid @RequestBody VaccinePostReq vaccinePostReq, BindingResult result, @RequestHeader Map<String, String> headers) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();

@@ -62,6 +62,7 @@ public class EmployeesRestController {
     }
 
     @PostMapping()
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> postEmployees(@Valid @RequestBody EmployeePostReq employeePostReq, BindingResult result, @RequestHeader Map<String, String> headers) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();
@@ -91,7 +92,8 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
+    @PreAuthorize("hasAnyAuthority('EMPLOYEE', 'ADMIN')")
     public ResponseEntity<?> putEmployees(@PathVariable Integer id, @Valid @RequestBody EmployeePutReq employeePutReq, BindingResult result, @RequestHeader Map<String, String> headers) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();
@@ -120,7 +122,8 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("{id}")
+    @PreAuthorize("hasAuthority('EMPLOYEE')")
     public ResponseEntity<?> patchEmployees(@PathVariable Integer id, @Valid @RequestBody EmployeePatchReq employeePatchReq, BindingResult result, @RequestHeader Map<String, String> headers) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();
@@ -152,7 +155,8 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
+    @PreAuthorize("hasAnyAuthority('EMPLOYEE', 'ADMIN')")
     public ResponseEntity<?> getEmployeesById(@PathVariable Integer id) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();
@@ -199,8 +203,9 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteEmployeeById(@PathVariable Integer id) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();

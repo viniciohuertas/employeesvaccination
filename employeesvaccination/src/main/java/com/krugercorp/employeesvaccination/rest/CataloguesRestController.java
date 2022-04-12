@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,7 @@ import com.krugercorp.employeesvaccination.service.CataloguesService;
 @CommonsLog(topic = "cataloguesRestController")
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/")
+@RequestMapping("catalogues")
 public class CataloguesRestController {
 	
 	private Map<String, Object> response = null;
@@ -55,7 +56,8 @@ public class CataloguesRestController {
 		this.commonBO = commonBO;
 	}
 
-	@GetMapping("catalogues/{abbreviation}")
+	@GetMapping("{abbreviation}")
+	@PreAuthorize("hasAnyAuthority('EMPLOYEE', 'ADMIN')")
     public ResponseEntity<?> getCataloguesByAbr(@PathVariable String abbreviation) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();

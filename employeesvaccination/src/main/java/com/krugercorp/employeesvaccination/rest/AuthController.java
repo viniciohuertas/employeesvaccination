@@ -46,7 +46,6 @@ public class AuthController {
     }
 
     @PostMapping(path = "login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    //public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
     public ResponseEntity<?> login(@RequestBody MultiValueMap<String, String> paramMap, @RequestParam("grant_type") String grantType) {	
     	this.response = new HashMap<>();
 
