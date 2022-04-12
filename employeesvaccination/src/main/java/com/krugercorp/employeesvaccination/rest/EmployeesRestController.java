@@ -41,7 +41,7 @@ import java.util.Map;
 @CommonsLog(topic = "employeesRestController")
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/")
+@RequestMapping("/employees")
 public class EmployeesRestController {
 
     private Map<String, Object> response = null;
@@ -61,7 +61,7 @@ public class EmployeesRestController {
         this.employeesService = employeesService;
     }
 
-    @PostMapping("employees")
+    @PostMapping()
     public ResponseEntity<?> postEmployees(@Valid @RequestBody EmployeePostReq employeePostReq, BindingResult result, @RequestHeader Map<String, String> headers) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();
@@ -72,9 +72,9 @@ public class EmployeesRestController {
         }
         try {
             this.validationsBO.employeePostValidation(employeePostReq.getIdentification());
-            this.employee = this.employeesService.postEmployees(employeePostReq);
+            String resp = this.employeesService.postEmployees(employeePostReq);
             this.info = Constants.Messages.REGISTER_OK;
-            response.put(Constants.Messages.INFO_RESPONSE, this.info);
+            response.put(Constants.Messages.INFO_RESPONSE, resp);
         } catch (DataAccessException e) {
             infoResponse = this.commonBO.fillInfo(EnumResponse.ERROR_DB);
             response.put(Constants.Messages.INFO_RESPONSE, infoResponse);
@@ -91,7 +91,7 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     
-    @PutMapping("employees/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> putEmployees(@PathVariable Integer id, @Valid @RequestBody EmployeePutReq employeePutReq, BindingResult result, @RequestHeader Map<String, String> headers) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();
@@ -120,7 +120,7 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("employees/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> patchEmployees(@PathVariable Integer id, @Valid @RequestBody EmployeePatchReq employeePatchReq, BindingResult result, @RequestHeader Map<String, String> headers) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();
@@ -152,7 +152,7 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("employees/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getEmployeesById(@PathVariable Integer id) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();
@@ -175,7 +175,7 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
-    @GetMapping("employees")
+    @GetMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getEmployeesFilter(
     		@RequestParam(value = "vaccinationStatus", required = false) Boolean vaccinationStatus,
@@ -199,7 +199,8 @@ public class EmployeesRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
-    @DeleteMapping("employees/{id}")
+    @DeleteMapping("/{id}")
+    @ResponseBody
     public ResponseEntity<?> deleteEmployeeById(@PathVariable Integer id) {
         this.response = new HashMap<>();
         this.infoResponse = new InfoResponse();

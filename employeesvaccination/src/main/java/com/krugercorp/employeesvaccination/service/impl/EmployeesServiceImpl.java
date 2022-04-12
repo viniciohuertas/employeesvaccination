@@ -7,12 +7,18 @@ import com.krugercorp.employeesvaccination.commons.request.EmployeePatchReq;
 import com.krugercorp.employeesvaccination.commons.request.EmployeePostReq;
 import com.krugercorp.employeesvaccination.commons.request.EmployeePutReq;
 import com.krugercorp.employeesvaccination.entity.Employee;
+import com.krugercorp.employeesvaccination.entity.Role;
+import com.krugercorp.employeesvaccination.entity.Users;
 import com.krugercorp.employeesvaccination.repository.EmployeeRepository;
 import com.krugercorp.employeesvaccination.repository.EmployeeRepositoryCustom;
+import com.krugercorp.employeesvaccination.repository.RoleRepository;
+import com.krugercorp.employeesvaccination.repository.UserRepository;
 import com.krugercorp.employeesvaccination.service.EmployeesService;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,22 +43,41 @@ public class EmployeesServiceImpl implements EmployeesService {
     private EmployeesBO employeesBO;
     private EmployeeRepository employeeRepository;
     private EmployeeRepositoryCustom employeeRepositoryCustom;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
     public EmployeesServiceImpl() {
     }
 
     @Autowired
-    public EmployeesServiceImpl(EmployeesBO employeesBO, EmployeeRepository employeeRepository, EmployeeRepositoryCustom employeeRepositoryCustom) {
+    public EmployeesServiceImpl(EmployeesBO employeesBO, EmployeeRepository employeeRepository, EmployeeRepositoryCustom employeeRepositoryCustom, 
+    		UserRepository userRepository, RoleRepository roleRepository) {
         this.employeesBO = employeesBO;
         this.employeeRepository = employeeRepository;
-        this.employeeRepositoryCustom = employeeRepositoryCustom;    
+        this.employeeRepositoryCustom = employeeRepositoryCustom;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
-    public Employee postEmployees(EmployeePostReq empReq) {
+    @Transactional
+    public String postEmployees(EmployeePostReq empReq) {
     	Employee employee = new Employee();
-        employee = this.employeesBO.employeePostReqToEmployee(employee, empReq);
-        return this.employeeRepository.save(employee);
+    	Users user = new Users();
+    	StringBuilder sb = new StringBuilder();
+    	user = this.employeesBO.createUser(empReq);
+    	user = this.userRepository.save(user);
+    	sb.append("Se creo el usuario: ");
+    	sb.append(user.getUsername());
+    	sb.append(", con password: ");
+    	sb.append(user.getUsername());
+    	Role role = this.employeesBO.createRole(user);
+    	role = this.roleRepository.save(role);
+    	sb.append(", tiene rol de: ");
+    	sb.append(role.getAuthority());
+    	employee = this.employeesBO.employeePostReqToEmployee(employee, empReq);        
+    	employee = this.employeeRepository.save(employee);
+    	return sb.toString();
     }
 
     @Override

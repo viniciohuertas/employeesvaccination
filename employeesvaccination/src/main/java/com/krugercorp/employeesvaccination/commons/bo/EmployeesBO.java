@@ -5,11 +5,30 @@ import com.krugercorp.employeesvaccination.commons.request.EmployeePostReq;
 import com.krugercorp.employeesvaccination.commons.request.EmployeePutReq;
 import com.krugercorp.employeesvaccination.commons.response.EmployeePostRes;
 import com.krugercorp.employeesvaccination.entity.Employee;
+import com.krugercorp.employeesvaccination.entity.Role;
+import com.krugercorp.employeesvaccination.entity.Users;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeesBO {
-    public Employee employeePostReqToEmployee(Employee employee, EmployeePostReq employeePostReq) {
+	
+	private final PasswordEncoder passwordEncoder;
+		
+	@Autowired
+    public EmployeesBO(PasswordEncoder passwordEncoder) {
+		super();
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	public Employee employeePostReqToEmployee(Employee employee, EmployeePostReq employeePostReq) {
         employee.setIdentification(employeePostReq.getIdentification());
         employee.setFirstname(employeePostReq.getFirstname());
         employee.setLastname(employeePostReq.getLastname());
@@ -45,5 +64,20 @@ public class EmployeesBO {
 		employee.setCellphone(employeePutReq.getCellphone());
 		employee.setVaccinationStatus(employeePutReq.getVaccinationStatus());
 		return employee;
+	}
+	
+	public Users createUser(EmployeePostReq empReq) {
+		Users user = new Users();		
+		user.setUsername(empReq.getIdentification());
+		user.setPassword(this.passwordEncoder.encode(empReq.getIdentification()));
+		user.setEnabled(true);
+    	return user;
+	}
+	
+	public Role createRole(Users user) {
+		Role rol = new Role();
+		rol.setAuthority("EMPLOYEE");
+    	rol.setUsers(user);
+    	return rol;
 	}
 }

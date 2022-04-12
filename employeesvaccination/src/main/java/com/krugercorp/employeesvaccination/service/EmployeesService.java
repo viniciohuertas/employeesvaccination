@@ -20,7 +20,7 @@ import com.krugercorp.employeesvaccination.entity.Employee;
  **/
 
 public interface EmployeesService {
-    Employee postEmployees(EmployeePostReq employeePostReq);
+    String postEmployees(EmployeePostReq employeePostReq);
 
     Employee getEmployee(Integer id) throws CustomValidationException;
 
